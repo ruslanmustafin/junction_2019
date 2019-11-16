@@ -14,7 +14,7 @@ import numpy as np
 from keras.utils import to_categorical
 from tqdm import tqdm
 from PIL import Image
-from segmentation_models.backbones import get_preprocessing
+import segmentation_models as sm
 from segmentation_models import Linknet
 from keras import optimizers, callbacks
 from losses import dice_coef_multiclass_loss
@@ -126,7 +126,7 @@ def train_generator(files, preprocessing_fn = None, batch_size = 1):
         yield (x_batch, y_batch)
     
 # In[]:
-preprocessing_fn = get_preprocessing(backbone)
+preprocessing_fn = sm.get_preprocessing(backbone)
 
 train_gen = train_generator(files = ann_files, 
                              preprocessing_fn = preprocessing_fn, 
