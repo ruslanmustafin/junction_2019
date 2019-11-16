@@ -67,6 +67,7 @@ if visualize:
     label_path = ann_files[i].replace('/ann/', '/masks_machine/').replace('jpg','png').split('.json')[0]
     x = get_image(img_path)
     y = get_image(label_path, label = True)
+    print(np.unique(y))
     fig, axes = plt.subplots(nrows = 2, ncols = 1)
     axes[0].imshow(x)
     axes[1].imshow(y)
@@ -130,13 +131,10 @@ preprocessing_fn = sm.get_preprocessing(backbone)
 
 train_gen = train_generator(files = ann_files, 
                              preprocessing_fn = preprocessing_fn, 
-                             batch_size = batch_size)
+                             batch_size = 2)
 
 # In[]: Bottleneck
 model = Linknet(backbone_name=backbone, input_shape=input_shape, classes=num_classes, activation='softmax')
-    
-print("\nModel summary:")
-model.summary()
 
 # In[]: 
 loss = [dice_coef_multiclass_loss]
